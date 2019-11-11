@@ -13,12 +13,12 @@ module Krane
     # @param logger [Object] Logger object (defaults to an instance of Krane::FormattedLogger)
     # @param current_sha [String] The SHA of the commit
     # @param template_dir [String] Path to a directory with templates to render (deprecated)
-    # @param template_paths [Array<String>] An array of template paths to render
+    # @param filenames [Array<String>] An array of directories and file paths to render
     # @param bindings [Hash] Bindings parsed by Krane::BindingsParser
-    def initialize(logger: nil, current_sha:, template_dir: nil, template_paths: [], bindings:)
+    def initialize(logger: nil, current_sha:, template_dir: nil, filenames: [], bindings:)
       @logger = logger || Krane::FormattedLogger.build
       @template_dir = template_dir
-      @template_paths = template_paths.map { |path| File.expand_path(path) }
+      @filenames = filenames.map { |path| File.expand_path(path) }
       @bindings = bindings
       @current_sha = current_sha
     end
@@ -58,9 +58,9 @@ module Krane
     private
 
     def template_sets_paths(only_filenames)
-      if @template_paths.present?
-        # Validation will catch @template_paths & @template_dir being present
-        @template_paths
+      if @filenames.present?
+        # Validation will catch @filenames & @template_dir being present
+        @filenames
       elsif only_filenames.blank?
         [File.expand_path(@template_dir || '')]
       else
@@ -105,10 +105,10 @@ module Krane
     def validate_configuration(template_sets, filenames)
       @logger.info("Validating configuration")
       errors = []
-      if @template_dir.present? && @template_paths.present?
-        errors << "template_dir and template_paths can not be combined"
-      elsif @template_dir.blank? && @template_paths.blank?
-        errors << "template_dir or template_paths must be set"
+      if @template_dir.present? && @filenames.present?
+        errors << "template_dir and filenames can not be combined"
+      elsif @template_dir.blank? && @filenames.blank?
+        errors << "template_dir or filenames must be set"
       end
 
       if filenames.present?

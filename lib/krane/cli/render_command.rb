@@ -21,7 +21,7 @@ module Krane
         ::Krane::OptionsHelper.with_processed_template_paths(options[:filenames]) do |paths|
           runner = ::Krane::RenderTask.new(
             current_sha: options['current-sha'],
-            template_paths: paths,
+            filenames: paths,
             bindings: bindings_parser.parse,
           )
           runner.run!(STDOUT)

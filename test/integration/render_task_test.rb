@@ -318,18 +318,18 @@ class RenderTaskTest < Krane::TestCase
     assert_logs_match("Rendered effectively_empty.yml.erb successfully, but the result was blank")
   end
 
-  def test_render_task_template_paths_xor_template_dir
+  def test_render_task_filenames_xor_template_dir
     render = Krane::RenderTask.new(
       logger: logger,
       current_sha: "k#{SecureRandom.hex(6)}",
       bindings: {},
       template_dir: fixture_path('collection-with-erb'),
-      template_paths: [fixture_path('collection-with-erb')]
+      filenames: [fixture_path('collection-with-erb')]
     )
 
     assert_render_failure(render.run(mock_output_stream))
     assert_logs_match_all([
-      "template_dir and template_paths can not be combined",
+      "template_dir and filenames can not be combined",
     ], in_order: true)
 
     render = Krane::RenderTask.new(
@@ -340,12 +340,12 @@ class RenderTaskTest < Krane::TestCase
 
     assert_render_failure(render.run(mock_output_stream))
     assert_logs_match_all([
-      "template_dir or template_paths must be set",
+      "template_dir or filenames must be set",
     ])
   end
 
-  def test_render_task_invalid_filenames_with_template_paths
-    render = build_render_task_with_template_paths(fixture_path('collection-with-erb'))
+  def test_render_task_invalid_filenames_with_filenames
+    render = build_render_task_with_filenames(fixture_path('collection-with-erb'))
 
     assert_render_failure(render.run(mock_output_stream, ['blah']))
     assert_logs_match_all([
@@ -353,8 +353,8 @@ class RenderTaskTest < Krane::TestCase
     ], in_order: true)
   end
 
-  def test_render_task_with_template_paths
-    render = build_render_task_with_template_paths(
+  def test_render_task_with_filenames
+    render = build_render_task_with_filenames(
       File.join(fixture_path('hello-cloud'), 'configmap-data.yml')
     )
 
@@ -388,12 +388,12 @@ class RenderTaskTest < Krane::TestCase
     )
   end
 
-  def build_render_task_with_template_paths(template_paths, bindings = {})
+  def build_render_task_with_filenames(filenames, bindings = {})
     Krane::RenderTask.new(
       logger: logger,
       current_sha: "k#{SecureRandom.hex(6)}",
       bindings: bindings,
-      template_paths: Array(template_paths)
+      filenames: Array(filenames)
     )
   end
 
