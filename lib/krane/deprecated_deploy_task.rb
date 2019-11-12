@@ -112,15 +112,15 @@ module Krane
 
     # Initializes the deploy task
     #
-    # @param namespace [String] Kubernetes namespace
-    # @param context [String] Kubernetes context
+    # @param namespace [String] Kubernetes namespace (*required*)
+    # @param context [String] Kubernetes context (*required*)
     # @param current_sha [String] The SHA of the commit
     # @param logger [Object] Logger object (defaults to an instance of Krane::FormattedLogger)
     # @param kubectl_instance [Kubectl] Kubectl instance
     # @param bindings [Hash] Bindings parsed by Krane::BindingsParser
     # @param global_timeout [Integer] Timeout in seconds
     # @param selector [Hash] Selector(s) parsed by Krane::LabelSelector
-    # @param filenames [Array<String>] An array of template paths
+    # @param filenames [Array<String>] An array of template paths (*required*)
     # @param template_dir [String] Path to a directory with templates (deprecated)
     # @param protected_namespaces [Array<String>] Array of protected Kubernetes namespaces (defaults
     #   to Krane::DeployTask::PROTECTED_NAMESPACES)
