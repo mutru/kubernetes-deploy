@@ -25,7 +25,7 @@ context = ARGV[1]
 restart = KubernetesDeploy::RestartTask.new(namespace: namespace, context: context,
    global_timeout: max_watch_seconds)
 begin
-  restart.run!(raw_deployments, selector: selector)
+  restart.run!(deployments: raw_deployments, selector: selector)
 rescue KubernetesDeploy::DeploymentTimeoutError
   exit(70)
 rescue KubernetesDeploy::FatalDeploymentError
