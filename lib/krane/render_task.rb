@@ -13,7 +13,7 @@ module Krane
     # @param logger [Object] Logger object (defaults to an instance of Krane::FormattedLogger)
     # @param current_sha [String] The SHA of the commit
     # @param template_dir [String] Path to a directory with templates to render (*deprecated*)
-    # @param filenames [Array<String>] An array of directories and file paths to render (*required*)
+    # @param filenames [Array<String>] An array of filenames and/or directories containing templates (*required*)
     # @param bindings [Hash] Bindings parsed by Krane::BindingsParser
     def initialize(logger: nil, current_sha:, template_dir: nil, filenames: [], bindings:)
       @logger = logger || Krane::FormattedLogger.build

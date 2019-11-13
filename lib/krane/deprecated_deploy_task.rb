@@ -120,7 +120,7 @@ module Krane
     # @param bindings [Hash] Bindings parsed by Krane::BindingsParser
     # @param global_timeout [Integer] Timeout in seconds
     # @param selector [Hash] Selector(s) parsed by Krane::LabelSelector
-    # @param filenames [Array<String>] An array of template paths (*required*)
+    # @param filenames [Array<String>] An array of filenames and/or directories containing templates (*required*)
     # @param template_dir [String] Path to a directory with templates (deprecated)
     # @param protected_namespaces [Array<String>] Array of protected Kubernetes namespaces (defaults
     #   to Krane::DeployTask::PROTECTED_NAMESPACES)
