@@ -54,8 +54,7 @@ module Krane
           protected_namespaces = []
         end
 
-        ::Krane::OptionsHelper.with_processed_template_paths(options[:filenames],
-          require_explicit_path: true) do |paths|
+        ::Krane::OptionsHelper.with_processed_template_paths(options[:filenames]) do |paths|
           deploy = ::Krane::DeployTask.new(
             namespace: namespace,
             context: context,

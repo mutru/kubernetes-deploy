@@ -27,8 +27,7 @@ module Krane
 
         selector = ::Krane::LabelSelector.parse(options[:selector])
 
-        ::Krane::OptionsHelper.with_processed_template_paths(options[:filenames],
-          require_explicit_path: true) do |paths|
+        ::Krane::OptionsHelper.with_processed_template_paths(options[:filenames]) do |paths|
           deploy = ::Krane::GlobalDeployTask.new(
             context: context,
             filenames: paths,
