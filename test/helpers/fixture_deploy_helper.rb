@@ -42,11 +42,11 @@ module FixtureDeployHelper
     success
   end
 
-  def deploy_global_fixtures(set, subset: nil, **args)
+  def deploy_global_fixtures(set, subset: nil, namespaced: true, **args)
     fixtures = load_fixtures(set, subset)
     raise "Cannot deploy empty template set" if fixtures.empty?
     args[:selector] ||= "test=#{@namespace}"
-    namespace_globals(fixtures, args[:selector])
+    namespace_globals(fixtures, args[:selector]) if namespaced
 
     yield fixtures if block_given?
 
@@ -56,6 +56,11 @@ module FixtureDeployHelper
       success = global_deploy_dirs_without_profiling(target_dir, **args)
     end
     success
+  end
+
+  def deploy_global_crd_fixtures(subset:, prune: true, clean_up: true, &block)
+    deploy_global_fixtures("crd", subset: subset, selector: 'app=krane', clean_up: clean_up, prune: prune,
+      namespaced: false, &block)
   end
 
   def deploy_raw_fixtures(set, wait: true, bindings: {}, subset: nil, render_erb: false)
