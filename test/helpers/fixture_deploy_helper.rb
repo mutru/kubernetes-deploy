@@ -60,7 +60,7 @@ module FixtureDeployHelper
 
   def deploy_global_crd_fixtures(subset:, prune: true, clean_up: true, &block)
     deploy_global_fixtures("crd", subset: subset, selector: 'app=krane', clean_up: clean_up, prune: prune,
-      namespaced: false, &block)
+                                  namespaced: false, &block)
   end
 
   def deploy_raw_fixtures(set, wait: true, bindings: {}, subset: nil, render_erb: false)

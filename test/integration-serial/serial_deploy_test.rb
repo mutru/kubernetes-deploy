@@ -210,7 +210,8 @@ class SerialDeployTest < Krane::IntegrationTest
   # end
 
   def test_custom_resources_predeployed_deprecated
-    assert_deploy_success(deploy_global_crd_fixtures(subset: %w(mail.yml things.yml widgets_deprecated.yml), clean_up: false) do |f|
+    assert_deploy_success(deploy_global_crd_fixtures(subset: %w(mail.yml things.yml widgets_deprecated.yml),
+    clean_up: false) do |f|
       mail = f.dig("mail.yml", "CustomResourceDefinition").first
       mail["metadata"]["annotations"] = {}
 
@@ -241,7 +242,8 @@ class SerialDeployTest < Krane::IntegrationTest
   end
 
   def test_custom_resources_predeployed
-    assert_deploy_success(deploy_global_crd_fixtures(subset: %w(mail.yml things.yml widgets.yml), clean_up: false) do |f|
+    assert_deploy_success(deploy_global_crd_fixtures(subset: %w(mail.yml things.yml widgets.yml),
+    clean_up: false) do |f|
       mail = f.dig("mail.yml", "CustomResourceDefinition").first
       mail["metadata"]["annotations"] = {}
 
@@ -396,7 +398,8 @@ class SerialDeployTest < Krane::IntegrationTest
   end
 
   def test_cr_success_with_default_rollout_conditions_deprecated_annotation
-    assert_deploy_success(deploy_global_crd_fixtures(subset: %(with_default_conditions_deprecated.yml), clean_up: false))
+    assert_deploy_success(deploy_global_crd_fixtures(subset: %(with_default_conditions_deprecated.yml),
+      clean_up: false))
     success_conditions = {
       "status" => {
         "observedGeneration" => 1,
