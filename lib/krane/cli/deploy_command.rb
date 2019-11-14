@@ -69,7 +69,6 @@ module Krane
 
           deploy.run!(
             verify_result: options["verify-result"],
-            allow_protected_ns: !protected_namespaces.empty?,
             prune: options[:prune]
           )
         end

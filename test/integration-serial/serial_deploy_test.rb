@@ -6,7 +6,7 @@ class SerialDeployTest < Krane::IntegrationTest
   # This cannot be run in parallel because it either stubs a constant or operates in a non-exclusive namespace
   def test_deploying_to_protected_namespace_with_override_does_not_prune
     assert_deploy_success(deploy_fixtures("hello-cloud", subset: ['configmap-data.yml', 'disruption-budgets.yml'],
-      protected_namespaces: [@namespace], allow_protected_ns: true, prune: false))
+      protected_namespaces: [@namespace], prune: false))
     hello_cloud = FixtureSetAssertions::HelloCloud.new(@namespace)
     hello_cloud.assert_configmap_data_present
     hello_cloud.assert_poddisruptionbudget
@@ -16,7 +16,7 @@ class SerialDeployTest < Krane::IntegrationTest
     ])
 
     result = deploy_fixtures("hello-cloud", subset: ["disruption-budgets.yml"],
-      protected_namespaces: [@namespace], allow_protected_ns: true, prune: false)
+      protected_namespaces: [@namespace], prune: false)
     assert_deploy_success(result)
     hello_cloud.assert_configmap_data_present # not pruned
     hello_cloud.assert_poddisruptionbudget

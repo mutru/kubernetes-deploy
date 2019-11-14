@@ -157,16 +157,15 @@ module Krane
     # Runs the task, raising exceptions in case of issues
     #
     # @param verify_result [Boolean] Wait for completion and verify success
-    # @param allow_protected_ns [Boolean] Enable deploying to protected namespaces
     # @param prune [Boolean] Enable deletion of resources that do not appear in the template dir
     #
     # @return [nil]
-    def run!(verify_result: true, allow_protected_ns: false, prune: true)
+    def run!(verify_result: true, prune: true)
       start = Time.now.utc
       @logger.reset
 
       @logger.phase_heading("Initializing deploy")
-      validate_configuration(allow_protected_ns: allow_protected_ns, prune: prune)
+      validate_configuration(prune: prune)
       resources = discover_resources
       validate_resources(resources)
 
@@ -282,7 +281,8 @@ module Krane
     end
     measure_method(:discover_resources)
 
-    def validate_configuration(allow_protected_ns:, prune:)
+    def validate_configuration(prune:)
+      allow_protected_ns = !@protected_namespaces.empty?
       task_config_validator = DeployTaskConfigValidator.new(@protected_namespaces, allow_protected_ns, prune,
         @task_config, kubectl, kubeclient_builder)
       errors = []

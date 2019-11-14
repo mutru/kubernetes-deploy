@@ -192,7 +192,7 @@ class KraneDeployTest < Krane::IntegrationTest
   def test_refuses_deploy_to_protected_namespace_with_override_if_pruning_enabled
     generated_ns = @namespace
     @namespace = 'default'
-    assert_deploy_failure(deploy_fixtures("hello-cloud", allow_protected_ns: true, prune: true))
+    assert_deploy_failure(deploy_fixtures("hello-cloud", prune: true))
     assert_logs_match_all([
       "Configuration invalid",
       "- Refusing to deploy to protected namespace 'default' with pruning enabled",
