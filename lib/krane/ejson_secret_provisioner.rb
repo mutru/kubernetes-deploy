@@ -135,7 +135,7 @@ module Krane
 
     def decrypt_ejson(key_dir)
       # ejson seems to dump both errors and output to STDOUT
-      out_err, st = Open3.capture2e("EJSON_KEYDIR=#{key_dir} ejson decrypt #{@ejson_file}")
+      out_err, st = Open3.capture2("EJSON_KEYDIR=#{key_dir} ejson decrypt #{@ejson_file}")
       raise EjsonSecretError, out_err unless st.success?
       JSON.parse(out_err)
     rescue JSON::ParserError
