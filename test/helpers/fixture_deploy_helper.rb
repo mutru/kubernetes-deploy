@@ -58,9 +58,9 @@ module FixtureDeployHelper
     success
   end
 
-  def deploy_global_crd_fixtures(subset:, prune: true, clean_up: true, &block)
-    deploy_global_fixtures("crd", subset: subset, selector: 'app=krane', clean_up: clean_up, prune: prune,
-                                  namespaced: false, &block)
+  def deploy_global_fixtures_non_namespaced(fixture, subset:, prune: true, clean_up: true, &block)
+    deploy_global_fixtures(fixture, subset: subset, selector: 'app=krane', clean_up: clean_up, prune: prune,
+                                    namespaced: false, &block)
   end
 
   def deploy_raw_fixtures(set, wait: true, bindings: {}, subset: nil, render_erb: false)
